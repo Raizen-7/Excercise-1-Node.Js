@@ -11,7 +11,7 @@ const getAllRegistrations = async (req, res, next) => {
 const getRegistrationById  = async (req, res, next) => {
     try{
        const { id } = req.params
-       const registrationById = await Registration.findOne({where: id } );
+       const registrationById = await Registration.findOne({where: {id}});
 
        if(!registrationById) { 
         return res.status(404).json({
@@ -28,7 +28,7 @@ const checkIn = async (req, res, next) => {
     try{
        const { entranceTime } = req.body;
        
-       Registration.create({  entranceTime });
+       const newRegistration = Registration.create({ entranceTime });
 
        res.status(200).json({
         newRegistration,
@@ -41,7 +41,7 @@ const checkOut = async (req, res, next) => {
         const { id } = req.params;
         const { exitTime } = req.body;
 
-        const registrationById = await Registration.findOne({where: id} );
+        const registrationById = await Registration.findOne({where: {id}} );
 
         if(!registrationById) { 
          return res.status(404).json({
@@ -60,7 +60,7 @@ const deleteRegistration = async (req, res, next) => {
     try{
         const { id } = req.params;
 
-        const registrationById = await Registration.findOne({where: id} );
+        const registrationById = await Registration.findOne({where: {id}} );
 
         if(!registrationById) { 
          return res.status(404).json({
